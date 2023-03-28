@@ -107,11 +107,9 @@ def move():
 i=0
 while True:
     if i%50 == 5:
-        cmdline = "rsync -avz -e ssh pi@192.168.1.155:Slideshow/ Slideshow" 
-        args = shlex.split(cmdline)
-        print(args)
+        os.system("rsync -avz -e ssh pi@192.168.1.155:Slideshow/ Slideshow") 
         time.sleep(0.2)
-        print(shlex.split("stanislaus"))
+        os.system("stanislaus")
     move()
     win.mainloop()
     i+=1
