@@ -106,7 +106,7 @@ def move():
 # calling the function
 i=0
 while True:
-    if i%50 = 0:
+    if i%50 == 0:
         cmdline = "rsync -avz -e ssh pi@192.168.1.155:Slideshow/ Slideshow" 
         args = shlex.split(cmdline)
         print(args)
