@@ -23,7 +23,7 @@ win.geometry(str(screen_width)+"x"+str(screen_height))
 #resize
 #######
 #find divisor
-path = "/home/pi64/Photos/AG 2022 12 09 Harden Christmas Fayre/Slideshow"
+path = "/home/pi64/Photos/Slideshow"
 #path = input("Please give the directory location of your files")
 print("Resizing photos...")
 dir_list = os.listdir(path)
