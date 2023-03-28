@@ -8,8 +8,9 @@ import os.path
 import datetime
 import time
 from datetime import date
-monthdic = { "Jan":"01","Feb":"02", "Mar": "03","Apr":"04", "May":"05", "Jun":"06", "Jul":"07", "Aug":"08",
- "Sep":"09",  "Oct":"10", "Nov": "11", "Dec":"12"}
+import RPi.GPIO as GPio, time, os, shlex
+#monthdic = { "Jan":"01","Feb":"02", "Mar": "03","Apr":"04", "May":"05", "Jun":"06", "Jul":"07", "Aug":"08",
+# "Sep":"09",  "Oct":"10", "Nov": "11", "Dec":"12"}
 # adjust window
 win=tk.Tk()
   
@@ -55,21 +56,21 @@ try:
     current_time = str(current_time)
     timearray = current_time.split("-")
     timearray[1] = int(timearray[1])
-    if int(timearray[2][:1])==int(day) and int(timearray[1])==int(month) and int(timearray[0])==int(year):
-        hourdiff = abs(int(timearray[2][3:5])-hour)
-        mindiff = abs(int(timearray[2][6:8])-minute)
-        second_diff = abs(int(timearray[2][9:11])-second)
-        greeting = tk.Label(text="These photos were taken today "+str(hourdiff)+" hour/s, "+str(mindiff)+" minute/s and "+str(second_diff)+" second/s ago in fact!",font = ('Times',24))
-    elif int(timearray[1])==int(month) and int(timearray[0])==int(year):
-        daydiff = abs(int(timearray[2][:2])-int(day))
-        greeting = tk.Label(text="These photos were taken this month, in fact "+str(daydiff)+" day/s ago!",font = ('Times',24))
-    elif int(timearray[0])==int(year):
-        month_diff = abs(int(timearray[1])-int(month))
-        greeting = tk.Label(text="This year, "+str(month_diff)+" month/s ago",font = ('Times',24))
-    else:
-        yeardiff = abs(int(timearray[0])-int(year))
-        greeting = tk.Label(text="This was taken "+str(yeardiff)+" ago",font = ('Times',24))
-    greeting.pack()
+    #if int(timearray[2][:1])==int(day) and int(timearray[1])==int(month) and int(timearray[0])==int(year):
+    #    hourdiff = abs(int(timearray[2][3:5])-hour)
+    #    mindiff = abs(int(timearray[2][6:8])-minute)
+    #    second_diff = abs(int(timearray[2][9:11])-second)
+    #    greeting = tk.Label(text="These photos were taken today "+str(hourdiff)+" hour/s, "+str(mindiff)+" minute/s and "+str(second_diff)+" second/s ago in fact!",font = ('Times',24))
+    #elif int(timearray[1])==int(month) and int(timearray[0])==int(year):
+   #     daydiff = abs(int(timearray[2][:2])-int(day))
+  #      greeting = tk.Label(text="These photos were taken this month, in fact "+str(daydiff)+" day/s ago!",font = ('Times',24))
+  #  elif int(timearray[0])==int(year):
+  #      month_diff = abs(int(timearray[1])-int(month))
+  #      greeting = tk.Label(text="This year, "+str(month_diff)+" month/s ago",font = ('Times',24))
+  #  else:
+  #      yeardiff = abs(int(timearray[0])-int(year))
+  #      greeting = tk.Label(text="This was taken "+str(yeardiff)+" ago",font = ('Times',24))
+  #  greeting.pack()
 except:
     pass
 l=Label()
@@ -90,8 +91,9 @@ def find_all(dir_list):
 count = find_all(dir_list)
 print(count)
 os.system('cls' if os.name == 'nt' else 'clear')
-speed = int(input("How quickly would you like to run the photos? (out of 10 from fast to slow)"))
-speed = speed*250
+#speed = int(input("How quickly would you like to run the photos? (out of 10 from fast to slow)"))
+#speed = speed*250
+speed = 900
 x=1
 def move():
     global x
@@ -102,6 +104,14 @@ def move():
     x = x+1
     win.after(800+speed, move)  
 # calling the function
+i=0
 while True:
+    if i%50 = 0:
+        cmdline = "rsync -avz -e ssh pi@192.168.1.155:Slideshow/ Slideshow" 
+        args = shlex.split(cmdline)
+        print(args)
+        time.sleep(0.2)
+        print(shlex.split("stanislaus"))
     move()
     win.mainloop()
+    i+=1
