@@ -8,12 +8,13 @@ import os.path
 import datetime
 import time
 from datetime import date
-import RPi.GPIO as GPio, time, os, shlex
+import RPi.GPIO as GPIO, time, os, subprocess,shlex
 #monthdic = { "Jan":"01","Feb":"02", "Mar": "03","Apr":"04", "May":"05", "Jun":"06", "Jul":"07", "Aug":"08",
 # "Sep":"09",  "Oct":"10", "Nov": "11", "Dec":"12"}
 # adjust window
 win=tk.Tk()
 def run():
+    win=tk.Tk()
 # loading the images
     screen_width = win.winfo_screenwidth()
     screen_height = win.winfo_screenheight()
