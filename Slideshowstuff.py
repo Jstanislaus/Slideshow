@@ -107,7 +107,7 @@ def move():
 i=0
 while True:
     if i%5 == 0:
-	print("Yo")
+        print("Yo")
         gpout = subprocess.Popen("rsync -avz -e ssh pi@192.168.1.155:Slideshow/ Slideshow") 
 	gpout1=gpout.wait()
         time.sleep(0.05)
