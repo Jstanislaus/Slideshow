@@ -109,10 +109,10 @@ while True:
     if i%5 == 0:
         print("Yo")
         gpout = subprocess.Popen("rsync -avz -e ssh pi@192.168.1.155:Slideshow/ Slideshow") 
-	gpout1=gpout.wait()
+        gpout1=gpout.wait()
         time.sleep(0.05)
         gpout = subprocess.Popen("stanislaus")
-	gpout1=gpout.wait()
+        gpout1=gpout.wait()
     move()
     win.mainloop()
     i+=1
