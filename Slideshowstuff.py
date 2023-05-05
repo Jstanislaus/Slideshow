@@ -6,7 +6,7 @@ import random
 import time
 import RPi.GPIO as GPIO, time, os, subprocess,shlex
 pygame.init()
-path = "/home/pi64/PiPySlideshow/PiPySlideshow"
+path = "/home/pi64/PiPySlideshow/PiPySlideshow/Individual_Photos"
 infoObject = pygame.display.Info()
 screen = pygame.display.set_mode((infoObject.current_w,infoObject.current_h), pygame.FULLSCREEN)  # Full screen 
 def set_demensions(img_w, img_h):
