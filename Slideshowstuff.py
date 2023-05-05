@@ -87,8 +87,7 @@ def updatepics(path,piclist):
         if dir_list[i] not in piclist:
             if dir_list[i][-3:]=="jpg" or dir_list[i][-3:]=="JPG" or dir_list[i][-3:]=="PNG" or dir_list[i][-3:]=="png":
                 piclist.append(dir_list[i])
-                newimglist.append(dir_list[i])
-    return piclist,newimglist
+    return piclist
 i=0
 j=0
 ##SHow the 5 most recent pics first
