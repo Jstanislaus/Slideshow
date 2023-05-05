@@ -65,7 +65,7 @@ def resizedim(x,y):
 def show_image(image_path,screen):
     img = pygame.image.load(image_path)
     img = img.convert()
-    screen.fill(pygame.Color("black"))
+    #screen.fill(pygame.Color("black"))
     x,y = screen.get_size()##no reratio needed, just resize
     width = int(img.get_width())
     height = int(img.get_height())
