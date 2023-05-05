@@ -1,120 +1,119 @@
-import tkinter as tk
-from tkinter import *
-from PIL import Image
-from PIL import ImageTk
-import os
-import time
+import pygame
+from PIL import Image, ImageDraw
+import PIL.Image
 import os.path
-import datetime
+import random
 import time
-from datetime import date
 import RPi.GPIO as GPIO, time, os, subprocess,shlex
-#monthdic = { "Jan":"01","Feb":"02", "Mar": "03","Apr":"04", "May":"05", "Jun":"06", "Jul":"07", "Aug":"08",
-# "Sep":"09",  "Oct":"10", "Nov": "11", "Dec":"12"}
-# adjust window
-win=tk.Tk()
-def run():
-    win=tk.Tk()
-# loading the images
-    screen_width = win.winfo_screenwidth()
-    screen_height = win.winfo_screenheight()
-    win.geometry(str(screen_width)+"x"+str(screen_height))
-#####
-#resize
-#######
-#find divisor
-    path = "/home/pi64/Slideshow"
-#path = input("Please give the directory location of your files")
-    print("Resizing photos...")
+pygame.init()
+path = "/home/pi64/PiPySlideshow/PiPySlideshow"
+infoObject = pygame.display.Info()
+screen = pygame.display.set_mode((infoObject.current_w,infoObject.current_h), pygame.FULLSCREEN)  # Full screen 
+def set_demensions(img_w, img_h):
+    # Note this only works when in booting in desktop mode. 
+	# When running in terminal, the size is not correct (it displays small). Why?
+
+    # connect to global vars
+    global transform_y, transform_x, offset_y, offset_x
+
+    # based on output screen resolution, calculate how to display
+    ratio_h = (infoObject.current_w * img_h) / img_w 
+
+    if (ratio_h < infoObject.current_h):
+        #Use horizontal black bars
+        #print "horizontal black bars"
+        transform_y = ratio_h
+        transform_x = infoObject.current_w
+        offset_y = (infoObject.current_h - ratio_h) / 2
+        offset_x = 0
+    elif (ratio_h > infoObject.current_h):
+        #Use vertical black bars
+        #print "vertical black bars"
+        transform_x = (infoObject.current_h * img_w) / img_h
+        transform_y = infoObject.current_h
+        offset_x = (infoObject.current_w - transform_x) / 2
+        offset_y = 0
+    else:
+        #No need for black bars as photo ratio equals screen ratio
+        #print "no black bars"
+        transform_x = infoObject.current_w
+        transform_y = infoObject.current_h
+        offset_y = offset_x = 0
+def getcropdim(width,height):
+    if int(width/6)>(height/4):#This only works if height or width fits in the surface
+        step = int(height/4)
+    else:
+        step = int(width/6)
+    left = (width/2)-(3*step)
+    top= (height/2)-(2*step)
+    width = (6*step)
+    height = (4*step)
+    return left, top, width,height
+
+def resizedim(x,y):
+    if int(x/6)*2>(y/2):
+        step = int(y/4)
+    else:
+        step = int(x/6)
+    top2 = (y/2)-(2*step)	
+    left2 = (x/2)-(3*step)
+    right2 = (x/2)+(3*step)
+    bottom2 = (y/2)+(2*step)
+    width2 = left2+right2
+    height2 = top2+bottom2
+    return width2,height2
+def show_image(image_path,screen):
+    img = pygame.image.load(image_path)
+    img = img.convert()
+    screen.fill(pygame.Color("black"))
+    x,y = screen.get_size()##no reratio needed, just resize
+    width = int(img.get_width())
+    height = int(img.get_height())
+    left, top, width,height = getcropdim(width,height)
+    cropimg1 = img.subsurface((left,top,width,height))#puts it into correct ratio
+    width2,height2 = resizedim(x,y)
+        # Make the image full screen
+    cropimg = pygame.transform.scale(cropimg1, (width2,height2))
+    width3 = int(cropimg.get_width())
+    height3 = int(cropimg.get_height())
+    screen.blit(cropimg,((x/2)-(width3/2),(y/2)-(height3/2)))
+    pygame.display.flip()
+piclist =[]
+def updatepics(path,piclist):
+    newimglist = []
     dir_list = os.listdir(path)
-    imgarray = []
     for i in range(0,len(dir_list)):
-        if dir_list[i][-3:]=="jpg" or dir_list[i][-3:]=="JPG" or dir_list[i][-3:]=="PNG" or dir_list[i][-3:]=="png":
-            img = Image.open(str(dir_list[i]))
-            w,h = img.size
-            ratio = h/w
-            if ratio > 1:
-                resized_image = img.resize((int(screen_width),int(ratio * screen_width)))
-            else:
-                ratio = w/h
-                resized_image = img.resize((int(screen_height * ratio),int(screen_height)))
-            img = ImageTk.PhotoImage(resized_image)
-            imgarray.append(img)
-#check current date
+        #print(dir_list[i][-3:])
+        if dir_list[i] not in piclist:
+            if dir_list[i][-3:]=="jpg" or dir_list[i][-3:]=="JPG" or dir_list[i][-3:]=="PNG" or dir_list[i][-3:]=="png":
+                piclist.append(dir_list[i])
+                newimglist.append(dir_list[i])
+    return piclist,newimglist
+i=0
+j=0
+##SHow the 5 most recent pics first
+piclist = updatepics(path,piclist)
+random.shuffle(piclist)
+count = len(piclist)
+print(piclist)
+while True:
+    print(i)
+    if i ==count:
+        i=0
+    if j%7==4:
+        piclist = updatepics(path,piclist)
+        random.shuffle(piclist)
+    print(path+"/"+str(piclist[i]))
+    print(path+"/"+str(piclist[i]))
     try:
-        modified_time = os.path.getmtime(path+"/"+dir_list[0])
-        convert_time = time.ctime(modified_time)
-        current_time = datetime.datetime.now() 
-        array = convert_time.split(" ")
-        timearray = array[3].split(":")
-        year = int(array[4])
-        month = int(monthdic[array[1]])
-        day = int(array[2])
-        hour = int(timearray[0])
-        minute = int(timearray[1])
-        second = int(timearray[2])
-        current_time = str(current_time)
-        timearray = current_time.split("-")
-        timearray[1] = int(timearray[1])
-    #if int(timearray[2][:1])==int(day) and int(timearray[1])==int(month) and int(timearray[0])==int(year):
-    #    hourdiff = abs(int(timearray[2][3:5])-hour)
-    #    mindiff = abs(int(timearray[2][6:8])-minute)
-    #    second_diff = abs(int(timearray[2][9:11])-second)
-    #    greeting = tk.Label(text="These photos were taken today "+str(hourdiff)+" hour/s, "+str(mindiff)+" minute/s and "+str(second_diff)+" second/s ago in fact!",font = ('Times',24))
-    #elif int(timearray[1])==int(month) and int(timearray[0])==int(year):
-   #     daydiff = abs(int(timearray[2][:2])-int(day))
-  #      greeting = tk.Label(text="These photos were taken this month, in fact "+str(daydiff)+" day/s ago!",font = ('Times',24))
-  #  elif int(timearray[0])==int(year):
-  #      month_diff = abs(int(timearray[1])-int(month))
-  #      greeting = tk.Label(text="This year, "+str(month_diff)+" month/s ago",font = ('Times',24))
-  #  else:
-  #      yeardiff = abs(int(timearray[0])-int(year))
-  #      greeting = tk.Label(text="This was taken "+str(yeardiff)+" ago",font = ('Times',24))
-  #  greeting.pack()
+        show_image((path+"/"+str(piclist[i])),screen)
     except:
         pass
-    l=Label()
-    l.pack()
-    os.system('cls' if os.name == 'nt' else 'clear')
-    count = find_all(dir_list)
-    print(count)
-    os.system('cls' if os.name == 'nt' else 'clear')
-    speed = 900
-    x=1
-print("Checking files...")
-#find number of files that will be in slideshow
-
-def find_all(dir_list):
-    counter = 0
-    for i in range(0,len(dir_list)):
-        if dir_list[i][-3:] == "jpg" or dir_list[i][-3:] == "JPG" or dir_list[i][-3:]=="png" or dir_list[i][-3:]=="PNG":
-            counter +=1
-        else:
-            pass
-    return counter
-
-#speed = int(input("How quickly would you like to run the photos? (out of 10 from fast to slow)"))
-#speed = speed*250
-def move():
-    global x
-    if x == count+1:
-        x = 1
-    else:
-        l.config(image=imgarray[x-1])
-    x = x+1
-    win.after(800+speed, move)  
-# calling the function
-run()
-i=0
-while True:
-    if i%5 == 0:
-        print("Yo")
-        gpout = subprocess.Popen("rsync -avz -e ssh pi@192.168.1.155:Slideshow/ Slideshow") 
-        gpout1=gpout.wait()
-        time.sleep(0.05)
-        gpout = subprocess.Popen("stanislaus")
-        gpout1=gpout.wait()
-        run()
-    move()
-    win.mainloop()
+    time.sleep(5)
+    for event in pygame.event.get():   
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                print("escape Key Pressed Exiting..")
+                pygame.quit()
     i+=1
+    j+=1
