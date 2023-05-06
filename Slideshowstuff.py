@@ -104,10 +104,7 @@ while True:
         random.shuffle(piclist)
     print(path+"/"+str(piclist[i]))
     print(path+"/"+str(piclist[i]))
-    try:
-        show_image((path+"/"+str(piclist[i])),screen)
-    except:
-        pass
+    show_image((path+"/"+str(piclist[i])),screen)
     time.sleep(3.5)
     for event in pygame.event.get():   
         if event.type == pygame.KEYDOWN:
