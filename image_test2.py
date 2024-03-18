@@ -49,9 +49,9 @@ def getcropdim(width,height):
     top= (height/2)-(2*step)
     width = (6*step)
     height = (4*step)
-    print(f"DIMENSIONS left: %f top: %f width: %f height: %f",left,top,width,height)
-    left = math.floor(left)
-    top = math.floor(top)
+    print(f"DIMENSIONS left: {left} top: {top} width: {width} height: {height}")
+    left = int(math.floor(left))
+    top = int(math.floor(top))
     width =math.floor(width)
     height = math.floor(height)
     return left, top, width,height
