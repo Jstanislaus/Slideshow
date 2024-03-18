@@ -114,7 +114,7 @@ while True:
         show_image((path+"/"+str(piclist[i])),screen)
     except:
         pass
-    time.sleep(5)
+    time.sleep(15)
     for event in pygame.event.get():   
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
