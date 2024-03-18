@@ -92,7 +92,9 @@ def updatepics(path,piclist):
 i=0
 j=0
 ##SHow the 5 most recent pics first
+piclist,newimglist = updatepics(path,piclist)
 show_image((path+"/"+str(piclist[i])),screen)
+
 for event in pygame.event.get():   
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_ESCAPE:
