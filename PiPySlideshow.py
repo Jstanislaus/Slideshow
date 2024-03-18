@@ -59,8 +59,8 @@ def resizedim(x,y):
     left2 = (x/2)-(3*step)
     right2 = (x/2)+(3*step)
     bottom2 = (y/2)+(2*step)
-    width2 = left2+right2
-    height2 = top2+bottom2
+    width2 = int(left2+right2)
+    height2 = int(top2+bottom2)
     return width2,height2
 def show_image(image_path,screen):
     img = pygame.image.load(image_path)
