@@ -1,38 +1,28 @@
-# importing required library
 import pygame
- 
-# activate the pygame library .
+# Initialize Pygame
 pygame.init()
-X = 600
-Y = 600
- 
-# create the display surface object
-# of specific dimension..e(X, Y).
-scrn = pygame.display.set_mode((720, 480))
- 
-# set the pygame window name
-pygame.display.set_caption('image')
- 
-# create a surface object, image is drawn on it.
-imp = pygame.image.load("/home/pi/SailingPhotos/pic1.png").convert()
- 
-# Using blit to copy content from one surface to other
-scrn.blit(imp, (0, 0))
- 
-# paint screen one time
-pygame.display.flip()
-status = True
-while (status):
- 
-  # iterate over the list of Event objects
-  # that was returned by pygame.event.get() method.
-    for i in pygame.event.get():
- 
-        # if event object type is QUIT
-        # then quitting the pygame
-        # and program both.
-        if i.type == pygame.QUIT:
-            status = False
- 
-# deactivates the pygame library
+
+# Set up the display window
+size = (800, 600)  # Adjust the dimensions as needed
+title = "My Image Display"  # Custom window title
+window = pygame.display.set_mode(size)
+pygame.display.set_caption(title)
+
+# Load the image
+image_path = "/home/pi/Slideshow/pic1.png"  # Replace with your image file name
+image = pygame.image.load(image_path)
+image_rect = image.get_rect()
+
+# Main loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Display the image
+    window.blit(image, image_rect)
+    pygame.display.update()
+
+# Clean up
 pygame.quit()
