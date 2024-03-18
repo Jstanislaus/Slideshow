@@ -84,6 +84,7 @@ def show_image(image_path,screen):
     cropimg = pygame.transform.scale(cropimg1, (width2,height2))
     width3 = int(cropimg.get_width())
     height3 = int(cropimg.get_height())
+    print(f"Type x{type(x)} and type y{type(y)}")
     screen.blit(cropimg,int(((x/2)-(width3/2),(y/2))-(height3/2)))
     pygame.display.flip()
 piclist =[]
