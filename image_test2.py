@@ -78,6 +78,8 @@ def show_image(image_path,screen):
     left, top, width,height = getcropdim(width,height)
     cropimg1 = img.subsurface((left,top,width,height))#puts it into correct ratio
     width2,height2 = resizedim(x,y)
+    width2 =int(width2)
+    height2 =int(height2)
         # Make the image full screen
     cropimg = pygame.transform.scale(cropimg1, (width2,height2))
     width3 = int(cropimg.get_width())
