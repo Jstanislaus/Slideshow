@@ -2,6 +2,7 @@ import pygame
 from PIL import Image, ImageDraw
 import PIL.Image
 import os.path
+import math
 import random
 import time
 import RPi.GPIO as GPIO, time, os, subprocess,shlex
@@ -48,7 +49,11 @@ def getcropdim(width,height):
     top= (height/2)-(2*step)
     width = (6*step)
     height = (4*step)
-    print("DIMENSIONS left: %f top: %f width: %f height: %f",left,top,width,height)
+    print(f"DIMENSIONS left: %f top: %f width: %f height: %f",left,top,width,height)
+    left = math.floor(left)
+    top = math.floor(top)
+    width =math.floor(width)
+    height = math.floor(height)
     return left, top, width,height
 
 def resizedim(x,y):
