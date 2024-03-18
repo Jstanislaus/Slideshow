@@ -8,7 +8,7 @@ import RPi.GPIO as GPIO, time, os, subprocess,shlex
 pygame.init()
 path = "/home/pi/SailingPhotos"
 infoObject = pygame.display.Info()
-screen = pygame.display.set_mode((1920,1080), pygame.FULLSCREEN)  # Full screen 
+screen = pygame.display.set_mode((720,480), pygame.FULLSCREEN)  # Full screen 
 def set_demensions(img_w, img_h):
     # Note this only works when in booting in desktop mode. 
 	# When running in terminal, the size is not correct (it displays small). Why?
@@ -17,27 +17,27 @@ def set_demensions(img_w, img_h):
     global transform_y, transform_x, offset_y, offset_x
 
     # based on output screen resolution, calculate how to display
-    ratio_h = (1920 * img_h) / img_w 
+    ratio_h = (720 * img_h) / img_w 
 
-    if (ratio_h < 1080):
+    if (ratio_h < 480):
         #Use horizontal black bars
         #print "horizontal black bars"
         transform_y = ratio_h
-        transform_x = 1920
-        offset_y = (1080 - ratio_h) / 2
+        transform_x = 720
+        offset_y = (480 - ratio_h) / 2
         offset_x = 0
-    elif (ratio_h > 1080):
+    elif (ratio_h > 480):
         #Use vertical black bars
         #print "vertical black bars"
-        transform_x = (1080 * img_w) / img_h
-        transform_y = 1080
-        offset_x = (1920 - transform_x) / 2
+        transform_x = (480 * img_w) / img_h
+        transform_y = 480
+        offset_x = (720 - transform_x) / 2
         offset_y = 0
     else:
         #No need for black bars as photo ratio equals screen ratio
         #print "no black bars"
-        transform_x = 1920
-        transform_y = 1080
+        transform_x = 720
+        transform_y = 480
         offset_y = offset_x = 0
 def getcropdim(width,height):
     if int(width/6)>(height/4):#This only works if height or width fits in the surface
