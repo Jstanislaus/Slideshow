@@ -3,16 +3,16 @@ from PIL import Image, ImageDraw
 import PIL.Image
 import os.path
 import random
+import config
 import time
 from datetime import datetime
 import RPi.GPIO as GPIO, time, os, subprocess,shlex
-VERBOSE = 0
+VERBOSE,wait_time,run_time,fixed_dim,Hostname,name_code = config.config()
 pygame.init()
-path = "/home/pi/Slideshow/AI_2023_05_06_KingsCoronationWhitefriars"
+path = "/home/pi/Slideshow/"+name_code
 if not os.path.exists(path):
     os.makedirs(path)
 path=path+"/Individual_Photos"
-print(path)
 infoObject = pygame.display.Info()
 screen = pygame.display.set_mode((infoObject.current_w,infoObject.current_h), pygame.FULLSCREEN)  # Full screen 
 def set_demensions(img_w, img_h):
@@ -109,7 +109,7 @@ while True:
     if i ==count:
         i=0
     if j%7==0:
-        gpout = subprocess.Popen("rsync -avz -e ssh pi@photobooth:Photobooth_Photos/AI_2023_05_06_KingsCoronationWhitefriars/Individual_Photos AI_2023_05_06_KingsCoronationWhitefriars",shell =True) 
+        gpout = subprocess.Popen(f"rsync -avz -e ssh pi@{Hostname}:Photobooth_Photos/{name_code}/Individual_Photos {name_code}",shell =True) 
         gpout1=gpout.wait()
         piclist,newimglist = updatepics(path,piclist)
         random.shuffle(piclist)
@@ -122,7 +122,7 @@ while True:
         show_image((path+"/"+str(piclist[i])),screen)
     except:
         pass
-    time.sleep(5)
+    time.sleep(run_time)
     for event in pygame.event.get():   
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
