@@ -77,7 +77,7 @@ def show_image(image_path,screen):
     cropimg = pygame.transform.scale(cropimg1, (width2,height2))
     width3 = int(cropimg.get_width())
     height3 = int(cropimg.get_height())
-    screen.blit(cropimg,((int(x)/2)-(width3/2),(int(y)/2)-(height3/2)))
+    screen.blit(cropimg,(int((x/2)-(width3/2)),int((y/2)-(height3/2))))
     pygame.display.flip()
 piclist =[]
 def updatepics(path,piclist):
