@@ -5,6 +5,7 @@ import os.path
 import random
 import time
 import RPi.GPIO as GPIO, time, os, subprocess,shlex
+VERBOSE = 0
 pygame.init()
 path = "/home/pi/SailingPhotos"
 infoObject = pygame.display.Info()
@@ -95,9 +96,11 @@ j=0
 piclist,newimglist = updatepics(path,piclist)
 random.shuffle(piclist)
 count = len(piclist)
-print(piclist)
+if VERBOSE:
+    print(piclist)
 while True:
-    print(i)
+    if VERBOSE:
+        print(i)
     if i ==count:
         i=0
     if j%7==0:
@@ -108,8 +111,8 @@ while True:
         if len(piclist)>=0:
             piclist.extend(newimglist)
             piclist.reverse()
-    print(path+"/"+str(piclist[i]))
-    print(path+"/"+str(piclist[i]))
+    if VERBOSE:
+        print(path+"/"+str(piclist[i]))
     try:
         show_image((path+"/"+str(piclist[i])),screen)
     except:
