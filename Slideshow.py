@@ -10,7 +10,7 @@ VERBOSE = 0
 pygame.init()
 path = "/home/pi/Slideshow/Individual_Photos/AI_2023_05_06_KingsCoronationWhitefriars"
 #infofile = open("/home/pi/Slideshow/Individual_Photos/AI_2023_05_06_KingsCoronationWhitefriars/Info.txt","w")
-infofile = open("/AI_2023_05_06_KingsCoronationWhitefriars/Info.txt","w")
+infofile = open("Info.txt","w")
 infofile.write(f"Date: {datetime.today().strftime('%Y-%m-%d')}")
 infofile.close()
 infoObject = pygame.display.Info()
