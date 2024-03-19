@@ -1,0 +1,13 @@
+Edited and Created by Jacob Stanislaus on 19/03/24.
+
+This file is for configuring the Slideshow program
+
+(Off or On):
+Display full detailed output (VERBOSE): Off
+
+Time displaying each photo (seconds): 5
+Photo file location: 
+Time to run: N/a
+Fixed dimensions: No
+Photobooth Pi Hostname: Photobooth
+Name-code of event: #e.g AI_2023_05_06_KingsCoronationWhitefriars
