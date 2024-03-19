@@ -4,10 +4,14 @@ import PIL.Image
 import os.path
 import random
 import time
+from datetime import datetime
 import RPi.GPIO as GPIO, time, os, subprocess,shlex
 VERBOSE = 0
 pygame.init()
 path = "/home/pi/Slideshow/Individual_Photos/AI_2023_05_06_KingsCoronationWhitefriars"
+infofile = open("/home/pi/Slideshow/Individual_Photos/AI_2023_05_06_KingsCoronationWhitefriars/Info.txt","w")
+infofile.write(f"Date: {datetime.today().strftime('%Y-%m-%d')}")
+infofile.close()
 infoObject = pygame.display.Info()
 screen = pygame.display.set_mode((infoObject.current_w,infoObject.current_h), pygame.FULLSCREEN)  # Full screen 
 def set_demensions(img_w, img_h):
