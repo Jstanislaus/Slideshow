@@ -11,7 +11,8 @@ pygame.init()
 path = "/home/pi/Slideshow/AI_2023_05_06_KingsCoronationWhitefriars"
 if not os.path.exists(path):
     os.makedirs(path)
-path=path+"Individual_Photos"
+path=path+"/Individual_Photos"
+print(path)
 infoObject = pygame.display.Info()
 screen = pygame.display.set_mode((infoObject.current_w,infoObject.current_h), pygame.FULLSCREEN)  # Full screen 
 def set_demensions(img_w, img_h):
