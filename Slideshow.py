@@ -7,7 +7,7 @@ import time
 import RPi.GPIO as GPIO, time, os, subprocess,shlex
 VERBOSE = 0
 pygame.init()
-path = "/home/pi/SailingPhotos"
+path = "/home/pi/Slideshow/Individual_Photos/AI_2023_05_06_KingsCoronationWhitefriars"
 infoObject = pygame.display.Info()
 screen = pygame.display.set_mode((infoObject.current_w,infoObject.current_h), pygame.FULLSCREEN)  # Full screen 
 def set_demensions(img_w, img_h):
