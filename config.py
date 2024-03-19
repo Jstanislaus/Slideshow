@@ -1,4 +1,5 @@
 def config():
+    
     config = open("Slideshow_Config.txt",'r')
     config_array = config.readlines()
     VERBOSE= config_array[4].split(' ')[-1].lower().strip("\n")

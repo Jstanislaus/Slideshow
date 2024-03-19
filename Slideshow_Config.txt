@@ -1,7 +1,7 @@
 Edited and Created by Jacob Stanislaus on 19/03/24.
-
+########################################################################
 This file is for configuring the Slideshow program
-
+########################################################################
 Display full detailed output (VERBOSE): FALSE
 Time displaying each photo (seconds): 5
 Runtime: N/a
