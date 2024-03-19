@@ -8,6 +8,7 @@ import time
 from datetime import datetime
 import RPi.GPIO as GPIO, time, os, subprocess,shlex
 VERBOSE,wait_time,run_time,fixed_dim,Hostname,name_code = config.config()
+VERBOSE = VERBOSE=="True"
 pygame.init()
 path = "/home/pi/Slideshow/"+name_code
 if not os.path.exists(path):
