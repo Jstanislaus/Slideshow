@@ -8,7 +8,7 @@ from datetime import datetime
 import RPi.GPIO as GPIO, time, os, subprocess,shlex
 VERBOSE = 0
 pygame.init()
-path = "/home/pi/Slideshow/Individual_Photos/AI_2023_05_06_KingsCoronationWhitefriars"
+path = "/home/pi/Slideshow/AI_2023_05_06_KingsCoronationWhitefriars"
 if not os.path.exists(path):
     os.makedirs(path)
 infoObject = pygame.display.Info()
