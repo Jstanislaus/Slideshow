@@ -9,7 +9,7 @@ from datetime import datetime
 import RPi.GPIO as GPIO, time, os, subprocess,shlex
 VERBOSE,wait_time,run_time,fixed_dim,Hostname,name_code = config.config()
 #check for any updates to config file
-gpout = subprocess.Popen(f"rsync -avz -e ssh pi@{Hostname}:/home/pi/Photobooth-printer-management/photobooth_config.txt ",shell =True) 
+gpout = subprocess.Popen(f"rsync -avz -e ssh pi@{Hostname}:/home/pi/Photobooth-printer-management/photobooth_config.txt /home/pi/Slideshow",shell =True) 
 gpout1=gpout.wait()
 VERBOSE,wait_time,run_time,fixed_dim,Hostname,name_code = config.config()
 VERBOSE = VERBOSE=="True"
