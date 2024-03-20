@@ -2,4 +2,4 @@
 
 cd /
 cd home/pi/Slideshow/
-python webcam.py
+python Slideshow.py
